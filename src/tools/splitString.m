@@ -1,7 +1,7 @@
-function fields = splitString(string,delimiter)
-%splitString Splits a string Perl style
+function fields = splitString(string, delimiter)
+% splitString Splits a string Perl style
 %
-% fields = splitString(string,delimiter)
+% fields = splitString(string, delimiter)
 %
 % string      Either a single string or a cell array of strings
 % delimiter   Splitting delimiter
@@ -12,7 +12,7 @@ function fields = splitString(string,delimiter)
 % Default delimiter is '\s' (whitespace)
 % Delimiters are perl regular expression style, e.g. '|' has to be expressed
 % as '\|'
-% Results are returned in the cell array fields 
+% Results are returned in the cell array fields
 %
 % 07/14/04 Markus Herrgard
 
@@ -24,36 +24,36 @@ end
 if iscell(string)
     stringList = string;
     for i = 1:length(stringList)
-        fields{i} = splitOneString(stringList{i},delimiter);
+        fields{i} = splitOneString(stringList{i}, delimiter);
     end
 else
-    fields = splitOneString(string,delimiter);
+    fields = splitOneString(string, delimiter);
 end
 
 fields = columnVector(fields);
 
-%%
-function fields = splitOneString(string,delimiter)
+
+function fields = splitOneString(string, delimiter)
 % Internal function that splits one string
 
-[startIndex,endIndex] = regexp(string,delimiter);
+[startIndex, endIndex] = regexp(string, delimiter);
 
 if (~isempty(startIndex))
 cnt = 0;
-for i = 1:length(startIndex)+1
+for i = 1:length(startIndex) + 1
     if (i == 1)
         if (endIndex(i) > 1)
             cnt = cnt + 1;
-            fields{cnt} = string(1:endIndex(i)-1);    
+            fields{cnt} = string(1:endIndex(i) - 1);
         end
-    elseif (i == length(startIndex)+1)
-        if (startIndex(i-1) < length(string))
+    elseif(i == length(startIndex) + 1)
+        if (startIndex(i - 1) < length(string))
             cnt = cnt + 1;
-            fields{cnt} = string(startIndex(i-1)+1:end);
+            fields{cnt} = string(startIndex(i - 1) + 1:end);
         end
     else
         cnt = cnt + 1;
-        fields{cnt} = string(startIndex(i-1)+1:endIndex(i)-1);
+        fields{cnt} = string(startIndex(i - 1) + 1:endIndex(i) - 1);
     end
 end
 else
@@ -64,7 +64,7 @@ fieldsOut = {};
 cnt = 0;
 for i = 1:length(fields)
     if (~isempty(fields{i}))
-        cnt = cnt+1;
+        cnt = cnt + 1;
         fieldsOut{cnt} = fields{i};
     end
 end
